@@ -1,4 +1,4 @@
-require("@nomicfoundation/hardhat-toolbox");
+require("@nomicfoundation/hardhat-toolbox/network-helpers");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
