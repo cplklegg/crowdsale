@@ -26,7 +26,7 @@ describe ('Crowdsale', () => {
 		user1 = accounts[1]
 
 		//Deploy Crowdsale
-		crowdsale = await Crowdsale.deploy(token.address, ether(1))
+		crowdsale = await Crowdsale.deploy(token.address, ether(1), '1000000')
 
 		//Send tokens to crowdsale
 		let transaction = await token.connect(deployer).transfer(crowdsale.address, tokens(1000000))
@@ -63,12 +63,30 @@ describe ('Crowdsale', () => {
 				expect(await token.balanceOf(user1.address)).to.eq(amount)
 			})
 
-			it('updates contracts ether balance', async () => {				
-				
+			it('updates contracts ether balance', async () => {					
 				expect(await ethers.provider.getBalance(crowdsale.address)).to.eq(amount)
 			})
+
+			it('updates tokensSold', async () => {					
+				expect(await crowdsale.tokensSold()).to.eq(amount)
+			})
+
+			it('emits a buy event', async () => {					
+				// --> https://hardhat.org.hardhat-chai-matchers/docs/reference#.emit
+				await expect(transaction).to.emit(crowdsale, 'Buy')
+				.withArgs(amount, user1.address)
+			})
+
 		})
 		
+		describe('Failure', () => {
+
+			it('rejects insufficient ETH', async () => {
+				await expect(crowdsale.connect(user1).buyTokens(tokens(10), { value: 0 })).to.be.reverted
+			})
+
+		})
+
 	})
 
 })
