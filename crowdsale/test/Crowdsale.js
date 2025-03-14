@@ -5,6 +5,8 @@ const tokens = (n) => {
 	return ethers.utils.parseUnits(n.toString(), 'ether')
 }
 
+const ether = tokens
+
 describe ('Crowdsale', () => {
 
 	let crowdsale, token
@@ -24,7 +26,7 @@ describe ('Crowdsale', () => {
 		user1 = accounts[1]
 
 		//Deploy Crowdsale
-		crowdsale = await Crowdsale.deploy(token.address)
+		crowdsale = await Crowdsale.deploy(token.address, ether(1))
 
 		//Send tokens to crowdsale
 		let transaction = await token.connect(deployer).transfer(crowdsale.address, tokens(1000000))
@@ -37,6 +39,9 @@ describe ('Crowdsale', () => {
 			expect(await token.balanceOf(crowdsale.address)).to.eq(tokens(1000000))
 		})
 
+		it('returns the price', async () => {			
+			expect(await crowdsale.price()).to.eq(ether(1))
+		})
 
 		it('returns token address', async () => {			
 			expect(await crowdsale.token()).to.eq(token.address)
@@ -44,13 +49,25 @@ describe ('Crowdsale', () => {
 	})
 
 	describe('Buying Tokens', () => {
-		
+		let transaction, result
+		let amount = tokens(10)
+
 		describe('Success', () => {
-			it('transfers tokens', async () => {			
-			
+			beforeEach(async () => {
+				transaction = await crowdsale.connect(user1).buyTokens(amount, { value: ether(10) })
+				result = await transaction.wait()
+			})
+
+			it('transfers tokens', async () => {				
+				expect(await token.balanceOf(crowdsale.address)).to.eq(tokens(999990))
+				expect(await token.balanceOf(user1.address)).to.eq(amount)
+			})
+
+			it('updates contracts ether balance', async () => {				
+				
+				expect(await ethers.provider.getBalance(crowdsale.address)).to.eq(amount)
 			})
 		})
-
 		
 	})
 
