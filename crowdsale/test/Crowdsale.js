@@ -103,6 +103,9 @@ describe ('Crowdsale', () => {
 				expect(await ethers.provider.getBalance(crowdsale.address)).to.eq(amount)
 			})
 
+			it('updates user token balance', async () => {					
+				expect(await token.balanceOf(user1.address)).to.eq(amount)
+			})
 		})
 		
 

@@ -18,7 +18,8 @@ contract Crowdsale {
 	}
 
 	receive() external payable {
-		
+		uint256 amount = msg.value / price;
+		buyTokens(amount * 1e18);
 	}
 
 	function buyTokens(uint256 _amount) public payable {
