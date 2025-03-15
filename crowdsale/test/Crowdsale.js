@@ -76,7 +76,6 @@ describe ('Crowdsale', () => {
 				await expect(transaction).to.emit(crowdsale, 'Buy')
 				.withArgs(amount, user1.address)
 			})
-
 		})
 		
 		describe('Failure', () => {
@@ -86,6 +85,26 @@ describe ('Crowdsale', () => {
 			})
 
 		})
+
+	})
+
+	describe('Sending ETH', () => {
+		let transaction, result
+		let amount = tokens(10)
+
+		describe('Success', () => {
+			beforeEach(async () => {
+				transaction = await user1.sendTransaction({ from: user1.address, to: crowdsale.address, value: amount})
+				result = await transaction.wait()
+			})
+
+			
+			it('updates contracts ether balance', async () => {					
+				expect(await ethers.provider.getBalance(crowdsale.address)).to.eq(amount)
+			})
+
+		})
+		
 
 	})
 
