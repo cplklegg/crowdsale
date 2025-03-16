@@ -108,6 +108,31 @@ describe ('Crowdsale', () => {
 			})
 		})
 		
+	describe('Finalizing Sale', () => {
+		let transaction, result
+		let amount = tokens(10)
+		let value = ether(10)
+
+		describe ('Success', () => {
+			beforeEach(async () => {
+				transaction = await crowdsale.connect(user1).buyTokens(amount, { value: value })
+				result = await transaction.wait()
+
+				transaction = await crowdsale.connect(deployer).finalize()
+				result = await transaction.wait()
+			})
+
+			it('transfers remaining tokens to owner', async () => {				
+				expect(await token.balanceOf(crowdsale.address)).to.eq(0)
+				expect(await token.balanceOf(deployer.address)).to.eq(tokens(999990))
+			})
+		})
+
+		describe ('Failure', () => {
+			
+		})
+
+	})
 
 	})
 
