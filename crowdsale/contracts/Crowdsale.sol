@@ -12,6 +12,7 @@ contract Crowdsale {
 	uint256 public tokensSold;
 
 	event Buy(uint256 amount, address buyer);
+	event Finalize(uint256 tokensSold, uint256 ethRaised);
 
 	constructor(Token _token, uint256 _price, uint256 _maxTokens) {
 		owner = msg.sender;
@@ -36,12 +37,15 @@ contract Crowdsale {
 	}
 
 	function finalize() public {
+		require(msg.sender == owner);
 		//Send remaining tokens to crowdsale creator
 		require(token.transfer(owner, token.balanceOf(address(this))));
 		//Send Ether to crowdsale creator
 		uint256 value = address(this).balance;
 		(bool sent, ) = owner.call{value: value}("");
 		require(sent);
+
+		emit Finalize(tokensSold, value);
 	}
 
 }
