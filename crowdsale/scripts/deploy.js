@@ -1,5 +1,5 @@
 
-
+//Completed smoke test deploy smart contract
 
 const hre = require("hardhat");
 
