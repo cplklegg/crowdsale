@@ -1,9 +1,12 @@
 import { Container } from 'react-bootstrap';
 
+//Components 
+import Navigation from './Navigation';
+
 function App() {
 	return(
 		<Container>
-			<h1>Hello, world!</h1>
+			<Navigation />
 		</Container>
 	)
 }
