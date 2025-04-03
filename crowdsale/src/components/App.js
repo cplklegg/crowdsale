@@ -7,7 +7,7 @@ import Navigation from './Navigation';
 import Info from './Info';
 
 function App() {
-
+	const [provider, setProvider] = useState(null);
 	const [account, setAccount] = useState(null);
 
 	// account -> Variable of current account value
@@ -15,8 +15,9 @@ function App() {
 	// null is a default value
 	
 	const loadBlockchainData = async () => {
+		// Initiate provider
 		const provider = new ethers.providers.Web3Provider(window.ethereum)
-		
+		setProvider(provider)
 
 		const accounts = await window.ethereum.request({ method: 'eth_requestAccounts'})
 		const account = ethers.utils.getAddress(accounts[0])
