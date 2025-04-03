@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 
 //Components 
 import Navigation from './Navigation';
+import Info from './Info';
 
 function App() {
 
@@ -15,11 +16,11 @@ function App() {
 	
 	const loadBlockchainData = async () => {
 		const provider = new ethers.providers.Web3Provider(window.ethereum)
-		console.log(provider)
+		
 
 		const accounts = await window.ethereum.request({ method: 'eth_requestAccounts'})
 		const account = ethers.utils.getAddress(accounts[0])
-		console.log(account)
+		
 		setAccount(account)
 
 
@@ -33,8 +34,10 @@ function App() {
 	return(
 		<Container>
 			<Navigation />
-			{/* { Read from state} */}
-			<div>{account}</div>
+			<hr />
+			{account && (
+				<Info account={account} />
+			)}			
 		</Container>
 	)
 }
