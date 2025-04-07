@@ -18,6 +18,7 @@ function App() {
 	const [crowdsale, setCrowdsale] = useState(null)
 
 	const [account, setAccount] = useState(null)
+	const [accountBalance, setAccountBalance] = useState(0)
 
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -40,8 +41,8 @@ function App() {
 		setAccount(account)
 
 		// Fetch account balance
-		const accountBalance = await token.balanceOf(account)
-		console.log(accountBalance)
+		const accountBalance = ethers.utils.formatUnits(await token.balanceOf(account), 18)
+		setAccountBalance(accountBalance)
 
 
 		setIsLoading(false)
@@ -60,7 +61,7 @@ function App() {
 			<Navigation />
 			<hr />
 			{account && (
-				<Info account={account} />
+				<Info account={account} accountBalance={accountBalance} />
 			)}			
 		</Container>
 	)
