@@ -27,7 +27,6 @@ function App() {
 	const [maxTokens, setMaxTokens] = useState(0)
 	const [tokensSold, setTokensSold] = useState(0)
 
-
 	const [isLoading, setIsLoading] = useState(true)
 
 	const loadBlockchainData = async () => {
@@ -65,8 +64,6 @@ function App() {
 		setTokensSold(tokensSold)
 
 		setIsLoading(false)
-
-		// Add to state
 	}
 
 	useEffect(() => {
@@ -78,7 +75,6 @@ function App() {
 	return(
 		<Container>
 			<Navigation />
-
 			<h1 className='my-4 text-center'>Introducing DApp Token!</h1>
 
 			{isLoading ? (
@@ -90,7 +86,6 @@ function App() {
 				<Progress maxTokens={maxTokens} tokensSold={tokensSold} />
 				</>
 			)}
-
 			
 			<hr />
 			{account && (
@@ -98,7 +93,6 @@ function App() {
 			)}			
 		</Container>
 	)	
-	
 }
 
 export default App;

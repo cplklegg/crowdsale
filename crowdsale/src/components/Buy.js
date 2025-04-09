@@ -27,7 +27,7 @@ const Buy = ({ provider, price, crowdsale, setIsLoading }) => {
             window.alert('User rejected or transaction reverted')
         }
 
-        setIsLoading(true)
+        setIsLoading(true)    
     }
 
     return (
