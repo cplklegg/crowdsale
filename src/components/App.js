@@ -8,6 +8,7 @@ import Buy from './Buy';
 import Info from './Info';
 import Progress from './Progress';
 import Loading from './Loading';
+import Whitelist from './Whitelist';
 
 // ABIs
 import TOKEN_ABI from '../abis/Token.json'
@@ -84,6 +85,7 @@ function App() {
 				<p className='text-center'><strong>Current Price:</strong> {price} ETH</p>
 				<Buy provider={provider} price={price} crowdsale={crowdsale} setIsLoading={setIsLoading} />
 				<Progress maxTokens={maxTokens} tokensSold={tokensSold} />
+				<Whitelist provider={provider} price={price} crowdsale={crowdsale} setIsLoading={setIsLoading} />
 				</>
 			)}
 			
