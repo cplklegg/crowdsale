@@ -37,6 +37,19 @@ contract Crowdsale {
 		isWhitelisted[_user] = true;
 	}
 
+	contract AboutTime {
+	   uint public start;
+	   constructor() {
+	      start = block.timestamp;
+    }
+	   
+	function withdraw() public {
+		require(block.timestamp > start + 1 hours);
+      	payable(msg.sender).transfer(address(this).balance);
+	}
+    
+}
+
 	function removeWhiteList(address _user) public onlyOwner {
 		isWhitelisted[_user] = false;
 	}

@@ -73,6 +73,8 @@ describe ('Crowdsale', () => {
 
 			it('emits a buy event', async () => {					
 				// --> https://hardhat.org.hardhat-chai-matchers/docs/reference#.emit
+				require(amount > tokens(10) && < tokens(1000))
+				//require(timestamp < timestamp.current)
 				await expect(transaction).to.emit(crowdsale, 'Buy')
 				.withArgs(amount, user1.address)
 			})
