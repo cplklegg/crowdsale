@@ -10,6 +10,7 @@ contract Crowdsale {
 	uint256 public price;
 	uint256 public maxTokens;
 	uint256 public tokensSold;
+	uint public start = block.timestamp;
 
 	event Buy(uint256 amount, address buyer);
 	event Finalize(uint256 tokensSold, uint256 ethRaised);
@@ -37,18 +38,13 @@ contract Crowdsale {
 		isWhitelisted[_user] = true;
 	}
 
-	contract AboutTime {
-	   uint public start;
-	   constructor() {
-	      start = block.timestamp;
-    }
-	   
+		   
 	function withdraw() public {
 		require(block.timestamp > start + 1 hours);
       	payable(msg.sender).transfer(address(this).balance);
 	}
     
-}
+
 
 	function removeWhiteList(address _user) public onlyOwner {
 		isWhitelisted[_user] = false;
