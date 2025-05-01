@@ -85,9 +85,7 @@ describe ('Crowdsale', () => {
 			it('rejects insufficient ETH', async () => {
 				await expect(crowdsale.connect(user1).buyTokens(tokens(10), { value: 0 })).to.be.reverted
 			})
-
 		})
-
 	})
 
 	describe('Sending ETH', () => {
@@ -132,7 +130,6 @@ describe ('Crowdsale', () => {
 		})
 	})
 
-
 	describe('Finalizing Sale', () => {
 		let transaction, result
 		let amount = tokens(10)
@@ -165,16 +162,10 @@ describe ('Crowdsale', () => {
 		})
 
 		describe ('Failure', () => {
-			
-
 			it('prevents non-owner from finalizing', async () => {
 				await expect(crowdsale.connect(user1).finalize()).to.be.reverted
 			})
-
 		})
-
 	})
-
 	})
-
 })

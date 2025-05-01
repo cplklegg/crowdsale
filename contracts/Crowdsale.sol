@@ -27,7 +27,7 @@ contract Crowdsale {
 	modifier onlyOwner() {
 			require(msg.sender == owner, 'Caller is not the owner');
 			_;
-		}
+	}
 
 	receive() external payable {
 		uint256 amount = msg.value / price;
@@ -37,14 +37,11 @@ contract Crowdsale {
 	function addWhiteList(address _user) public onlyOwner {
 		isWhitelisted[_user] = true;
 	}
-
 		   
 	function withdraw() public {
 		require(block.timestamp > start + 1 hours);
       	payable(msg.sender).transfer(address(this).balance);
-	}
-    
-
+	}  
 
 	function removeWhiteList(address _user) public onlyOwner {
 		isWhitelisted[_user] = false;
@@ -86,5 +83,4 @@ contract Crowdsale {
 
 		emit Finalize(tokensSold, value);
 	}
-
 }
