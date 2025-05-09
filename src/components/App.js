@@ -29,6 +29,7 @@ function App() {
 	const [tokensSold, setTokensSold] = useState(0)
 
 	const [isLoading, setIsLoading] = useState(true)
+	const [hasStarted, setHasStarted] = useState(false)
 
 	const loadBlockchainData = async () => {
 		// Initiate provider
@@ -64,6 +65,9 @@ function App() {
 		const tokensSold = ethers.utils.formatUnits(await crowdsale.tokensSold(), 18)
 		setTokensSold(tokensSold)
 
+		const crowdsaleStatus = await crowdsale.connect(signer).hasStarted()
+		setHasStarted(crowdsaleStatus)
+
 		setIsLoading(false)
 	}
 
@@ -78,6 +82,12 @@ function App() {
 			<Navigation />
 			<h1 className='my-4 text-center'>Introducing DApp Token!</h1>
 
+			{hasStarted ? (
+				<><h2>Crowdsale closed</h2></>
+
+			  ) : (
+			  	<><h2>Crowdsale is open</h2></>
+			  )}
 			{isLoading ? (
 				<Loading />
 			)	: (

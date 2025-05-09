@@ -47,10 +47,12 @@ contract Crowdsale {
 		isWhitelisted[_user] = false;
 	}
 
+
 	function buyTokens(uint256 _amount) public payable {
 		require(msg.value == (_amount / 1e18) * price);
 		require(token.balanceOf(address(this)) >= _amount);
 		require(token.transfer(msg.sender, _amount));
+		require(block.timestamp > start + 1 hours);
 
 		tokensSold += _amount;
 
@@ -66,6 +68,10 @@ contract Crowdsale {
 		tokensSold += _amount;
 
 		emit Buy(_amount, msg.sender);
+	}
+
+	function hasStarted() public view returns (bool) {
+		return block.timestamp > start + 1 hours;		
 	}
 
 	function setPrice(uint256 _price) public onlyOwner {
